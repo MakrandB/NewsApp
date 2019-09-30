@@ -15,4 +15,14 @@ public interface INewsView {
      * @param dataList : news details list
      */
     void setNewsList(List<NewsItem> dataList);
+
+    /**
+     * Displays progress bar while news are loading
+     */
+    void showNewsLoadingView();
+
+    /**
+     * Hides the progressbar after news loading is completed
+     */
+    void hideNewsLoadingView();
 }

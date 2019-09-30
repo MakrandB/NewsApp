@@ -2,12 +2,15 @@ package com.demoandroid.news.presenters.implemetation;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.demoandroid.news.presenters.interfaces.INewsDetailsPresenter;
 import com.demoandroid.news.ui.interfaces.INewsView;
 import com.demoandroid.news.viewmodels.NewsViewModel;
-import com.demoandroid.news.presenters.interfaces.INewsDetailsPresenter;
 
 import javax.inject.Inject;
 
+/**
+ * Presenter that handles the News details view
+ */
 public class NewsDetailsPresenter implements INewsDetailsPresenter {
 
     private INewsView mMainView;
@@ -22,6 +25,7 @@ public class NewsDetailsPresenter implements INewsDetailsPresenter {
     @Override
     public void getNewsList() {
         mNewsViewModel.getNewsLiveData().observe((LifecycleOwner) mMainView, newsResponse -> {
+            mMainView.hideNewsLoadingView();
             if (newsResponse != null) {
                 mMainView.setNewsList(newsResponse.getArticles());
             }
@@ -31,5 +35,6 @@ public class NewsDetailsPresenter implements INewsDetailsPresenter {
     @Override
     public void onUiComponentLoaded() {
         getNewsList();
+        mMainView.showNewsLoadingView();
     }
 }

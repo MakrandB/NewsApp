@@ -1,5 +1,6 @@
 package com.demoandroid.news.ui.implemetation;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 
@@ -31,6 +32,7 @@ public class NewsActivity extends AppCompatActivity implements INewsView {
 
     private ArrayList<NewsItem> mArticleArrayList = new ArrayList<>();
     private NewsDetailsAdapter mNewsAdapter;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,5 +72,21 @@ public class NewsActivity extends AppCompatActivity implements INewsView {
         mArticleArrayList.clear();
         mArticleArrayList.addAll(dataList);
         mNewsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showNewsLoadingView() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setMessage("Loading News...");
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideNewsLoadingView() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
 }
