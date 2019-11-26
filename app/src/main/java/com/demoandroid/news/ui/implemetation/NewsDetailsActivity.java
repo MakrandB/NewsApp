@@ -3,7 +3,6 @@ package com.demoandroid.news.ui.implemetation;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +22,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.news_details_layout);
         initView();
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -64,6 +62,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
         mTvDetails = findViewById(R.id.tv_content);
         mTvNewsURL = findViewById(R.id.tv_url);
         mIVContent = findViewById(R.id.iv_news_icon);
+        findViewById(R.id.fab_back).setOnClickListener(view -> {
+            NewsDetailsActivity.this.finish();
+            NewsDetailsActivity.this.onBackPressed();
+        });
 
     }
 }
