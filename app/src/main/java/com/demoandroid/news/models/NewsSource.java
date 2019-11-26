@@ -3,7 +3,9 @@ package com.demoandroid.news.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class NewsSource {
+import java.io.Serializable;
+
+public class NewsSource implements Serializable {
     @Expose
     private String id;
     @SerializedName("name")

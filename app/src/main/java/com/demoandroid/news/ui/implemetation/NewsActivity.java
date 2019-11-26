@@ -1,6 +1,7 @@
 package com.demoandroid.news.ui.implemetation;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import com.demoandroid.news.models.NewsItem;
 import com.demoandroid.news.presenters.implemetation.NewsDetailsPresenter;
 import com.demoandroid.news.presenters.interfaces.INewsDetailsPresenter;
 import com.demoandroid.news.ui.interfaces.INewsView;
+import com.demoandroid.news.ui.interfaces.IOnItemClickListener;
 import com.demoandroid.news.viewmodels.NewsViewModel;
 
 import java.util.ArrayList;
@@ -25,8 +27,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class NewsActivity extends AppCompatActivity implements INewsView {
+public class NewsActivity extends AppCompatActivity implements INewsView, IOnItemClickListener {
 
+    public static final String NEWS_MODEL = "news_model";
     @Inject
     INewsDetailsPresenter mPresenter;
 
@@ -59,7 +62,7 @@ public class NewsActivity extends AppCompatActivity implements INewsView {
      */
     private void initView() {
         RecyclerView rvHeadline = findViewById(R.id.rvNews);
-        mNewsAdapter = new NewsDetailsAdapter(mArticleArrayList);
+        mNewsAdapter = new NewsDetailsAdapter(mArticleArrayList, this);
         rvHeadline.setLayoutManager(new LinearLayoutManager(this));
         rvHeadline.setAdapter(mNewsAdapter);
         rvHeadline.setItemAnimator(new DefaultItemAnimator());
@@ -87,6 +90,18 @@ public class NewsActivity extends AppCompatActivity implements INewsView {
     public void hideNewsLoadingView() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onItemClicked(View view) {
+        if (view != null && view.getTag() != null) {
+            NewsItem newsItem = (NewsItem) view.getTag();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(NEWS_MODEL, newsItem);
+            Intent intent = new Intent(this, NewsDetailsActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 }

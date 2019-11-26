@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">News App</string>
+    <string name="refer_link_label">For further details please visit link provided below</string>
 </resources>
